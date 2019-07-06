@@ -35,6 +35,7 @@
         android:theme="@style/blinkt"
         tools:ignore="UnusedAttribute">
 
+        <receiver android:process=":remote" android:name=".Alarm"/>
 
         <meta-data android:name="android.content.APP_RESTRICTIONS"
                    android:resource="@xml/app_restrictions" />

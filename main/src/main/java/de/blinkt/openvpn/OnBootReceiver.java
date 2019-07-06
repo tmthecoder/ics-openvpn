@@ -37,7 +37,11 @@ public class OnBootReceiver extends BroadcastReceiver {
 		}
 	}
 
-	void launchVPN(VpnProfile profile, Context context) {
+	private void launchVPN(VpnProfile profile, Context context) {
+		startVPN(profile, context);
+	}
+
+	public static void startVPN(VpnProfile profile, Context context) {
 		Intent startVpnIntent = new Intent(Intent.ACTION_MAIN);
 		startVpnIntent.setClass(context, LaunchVPN.class);
 		startVpnIntent.putExtra(LaunchVPN.EXTRA_KEY,profile.getUUIDString());

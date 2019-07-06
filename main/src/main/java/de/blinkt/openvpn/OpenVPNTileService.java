@@ -84,13 +84,7 @@ public class OpenVPNTileService extends TileService implements VpnStatus.StateLi
     @SuppressLint("Override")
     @TargetApi(Build.VERSION_CODES.N)
     void launchVPN(VpnProfile profile, Context context) {
-        Intent startVpnIntent = new Intent(Intent.ACTION_MAIN);
-        startVpnIntent.setClass(context, LaunchVPN.class);
-        startVpnIntent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUIDString());
-        startVpnIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startVpnIntent.putExtra(LaunchVPN.EXTRA_HIDELOG, true);
-
-        context.startActivity(startVpnIntent);
+        OnBootReceiver.startVPN(profile, context);
     }
 
     @TargetApi(Build.VERSION_CODES.N)
