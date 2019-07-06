@@ -102,7 +102,8 @@ android {
     }
 
     signingConfigs {
-        create("release") {}
+        create("release") {
+        }
     }
 
     lintOptions {
@@ -127,8 +128,8 @@ android {
         create("normal") {
             setDimension("implementation")
             buildConfigField ("boolean", "openvpn3", "true")
+            applicationId = "org.hacksugar.popcorn"
         }
-
     }
 
 
@@ -139,14 +140,14 @@ android {
 }
 
 // ~/.gradle/gradle.properties
-if (project.hasProperty("keystoreFile") &&
-        project.hasProperty("keystorePassword") &&
-        project.hasProperty("keystoreAliasPassword")) {
+if (project.hasProperty("storeFile") &&
+        project.hasProperty("storePassword") &&
+        project.hasProperty("keyPassword")) {
     android.signingConfigs.getByName("release") {
-        storeFile = file(project.properties["keystoreFile"] as String)
-        storePassword = project.properties["keystorePassword"] as String
-        keyPassword = project.properties["keystoreAliasPassword"] as String
-        keyAlias = project.properties["keystoreAlias"] as String
+        storeFile = file(project.properties["storeFile"] as String)
+        storePassword = project.properties["storePassword"] as String
+        keyPassword = project.properties["keyPassword"] as String
+        keyAlias = project.properties["keyAlias"] as String
     }
 } else {
     android.buildTypes.getByName("release").signingConfig = null
