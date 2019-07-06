@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import de.blinkt.openvpn.core.ProfileManager;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
@@ -14,7 +15,7 @@ import java.util.Random;
 public class Alarm extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        ArrayList<VpnProfile> allvpn = (ArrayList<VpnProfile>) getPM(context).getProfiles();
+        ArrayList<VpnProfile> allvpn = new ArrayList<>(getPM(context).getProfiles());
         for (VpnProfile vpn: allvpn) {
             if (vpn == ProfileManager.getConnectedProfile()) {
                 allvpn.remove(vpn);
