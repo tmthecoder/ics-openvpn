@@ -264,4 +264,9 @@ public class ProfileManager {
         if (profile!=tmpprofile)
             saveProfile(c, profile, false, false);
     }
+
+
+    public static VpnProfile getConnectedProfile() {
+        return mLastConnectedVpn;
+    }
 }
