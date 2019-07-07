@@ -19,6 +19,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
 import android.text.Html;
 import android.text.Html.ImageGetter;
@@ -635,8 +636,10 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     private void startVPN(VpnProfile profile, boolean hopping) {
         if (hopping) {
             Log.i("HOPPER", "Started");
-            Intent alarmIntent = new Intent(getContext(), Alarm.class);
-            pendingIntent = PendingIntent.getBroadcast(getContext(), 0, alarmIntent, 0);
+            manager = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(getActivity(), Alarm.class);
+            pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
+            manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 60 * 5, pendingIntent); // Millisec * Second * Minute
         }
         getPM().saveProfile(getActivity(), profile);
         Intent intent = new Intent(getActivity(), LaunchVPN.class);

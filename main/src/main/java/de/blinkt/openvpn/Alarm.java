@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import de.blinkt.openvpn.core.ProfileManager;
 
 import java.lang.reflect.Array;
@@ -15,6 +16,7 @@ import java.util.Random;
 public class Alarm extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.i("HOPPER", "Hopping");
         ArrayList<VpnProfile> allvpn = new ArrayList<>(getPM(context).getProfiles());
         for (VpnProfile vpn: allvpn) {
             if (vpn == ProfileManager.getConnectedProfile()) {
@@ -29,19 +31,16 @@ public class Alarm extends BroadcastReceiver {
         return ProfileManager.getInstance(context);
     }
     public void setAlarm(Context context) {
+        Log.i("HOPPER", "AStart");
         AlarmManager am =( AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(context, Alarm.class);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
-        if (am != null) {
-            am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 60 * 30, pi); // Millisec * Second * Minute
-        }
+        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 60 * 5, pi); // Millisec * Second * Minute
     }
     public void cancelAlarm(Context context) {
         Intent intent = new Intent(context, Alarm.class);
         PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent, 0);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        if (alarmManager != null) {
-            alarmManager.cancel(sender);
-        }
+        alarmManager.cancel(sender);
     }
 }
