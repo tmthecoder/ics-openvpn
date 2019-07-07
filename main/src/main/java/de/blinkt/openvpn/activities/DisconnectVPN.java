@@ -6,7 +6,9 @@
 package de.blinkt.openvpn.activities;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,6 +17,8 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
 
+import android.util.Log;
+import de.blinkt.openvpn.Alarm;
 import de.blinkt.openvpn.LaunchVPN;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.core.IOpenVPNServiceInternal;
@@ -27,6 +31,8 @@ import de.blinkt.openvpn.core.VpnStatus;
  */
 public class DisconnectVPN extends Activity implements DialogInterface.OnClickListener, DialogInterface.OnCancelListener {
     private IOpenVPNServiceInternal mService;
+    private PendingIntent pendingIntent;
+    private AlarmManager manager;
     private ServiceConnection mConnection = new ServiceConnection() {
 
 
@@ -78,6 +84,13 @@ public class DisconnectVPN extends Activity implements DialogInterface.OnClickLi
             ProfileManager.setConntectedVpnProfileDisconnected(this);
             if (mService != null) {
                 try {
+                    Intent alarmIntent = new Intent(this, Alarm.class);
+                    pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
+                    manager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+                    if (manager != null) {
+                        manager.cancel(pendingIntent);
+                    }
+                    Log.i("HOPPER", "Stopped");
                     mService.stopVPN(false);
                 } catch (RemoteException e) {
                     VpnStatus.logException(e);

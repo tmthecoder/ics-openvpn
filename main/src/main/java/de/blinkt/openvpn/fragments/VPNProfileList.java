@@ -6,9 +6,7 @@
 package de.blinkt.openvpn.fragments;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ListFragment;
+import android.app.*;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,6 +22,7 @@ import android.os.PersistableBundle;
 import android.support.annotation.RequiresApi;
 import android.text.Html;
 import android.text.Html.ImageGetter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,11 +30,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -43,6 +38,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
 
+import de.blinkt.openvpn.Alarm;
 import de.blinkt.openvpn.LaunchVPN;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
@@ -73,7 +69,10 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     private static final int MENU_IMPORT_PROFILE = Menu.FIRST + 1;
     private static final int MENU_CHANGE_SORTING = Menu.FIRST + 2;
     private static final String PREF_SORT_BY_LRU = "sortProfilesByLRU";
+    private PendingIntent pendingIntent;
+    private AlarmManager manager;
     private String mLastStatusMessage;
+    private boolean hopperChecked = false;
 
     @Override
     public void updateState(String state, String logmessage, final int localizedResId, ConnectionStatus level) {
@@ -102,12 +101,12 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
             View v = super.getView(position, convertView, parent);
 
             final VpnProfile profile = (VpnProfile) getListAdapter().getItem(position);
-
             View titleview = v.findViewById(R.id.vpn_list_item_left);
             titleview.setOnClickListener(new OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.M)
                 @Override
                 public void onClick(View v) {
-                    startOrStopVPN(profile);
+                    startOrStopVPN(profile, hopperChecked);
                 }
             });
 
@@ -135,12 +134,13 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         }
     }
 
-    private void startOrStopVPN(VpnProfile profile) {
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void startOrStopVPN(VpnProfile profile, boolean hopping) {
         if (VpnStatus.isVPNActive() && profile.getUUIDString().equals(VpnStatus.getLastConnectedVPNProfile())) {
             Intent disconnectVPN = new Intent(getActivity(), DisconnectVPN.class);
             startActivity(disconnectVPN);
         } else {
-            startVPN(profile);
+            startVPN(profile, hopping);
         }
     }
 
@@ -315,7 +315,14 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
 
         TextView newvpntext = (TextView) v.findViewById(R.id.add_new_vpn_hint);
         TextView importvpntext = (TextView) v.findViewById(R.id.import_vpn_hint);
+        Switch hopper = v.findViewById(R.id.hopper);
 
+        hopper.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                hopperChecked = isChecked;
+            }
+        });
         newvpntext.setText(Html.fromHtml(getString(R.string.add_new_vpn_hint), new MiniImageGetter(), null));
         importvpntext.setText(Html.fromHtml(getString(R.string.vpn_import_hint), new MiniImageGetter(), null));
 
@@ -624,10 +631,14 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         startActivityForResult(vprefintent, START_VPN_CONFIG);
     }
 
-    private void startVPN(VpnProfile profile) {
-
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void startVPN(VpnProfile profile, boolean hopping) {
+        if (hopping) {
+            Log.i("HOPPER", "Started");
+            Intent alarmIntent = new Intent(getContext(), Alarm.class);
+            pendingIntent = PendingIntent.getBroadcast(getContext(), 0, alarmIntent, 0);
+        }
         getPM().saveProfile(getActivity(), profile);
-
         Intent intent = new Intent(getActivity(), LaunchVPN.class);
         intent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUID().toString());
         intent.setAction(Intent.ACTION_MAIN);
