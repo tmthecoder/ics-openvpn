@@ -31,7 +31,7 @@ public class Connection implements Serializable, Cloneable {
         NONE,
         HTTP,
         SOCKS5,
-        ORBOT0
+        ORBOT
     }
 
     private static final long serialVersionUID = 92031902903829089L;
