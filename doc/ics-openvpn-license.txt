@@ -1,29 +1,25 @@
 
-License for popcornVPN . Please note that the thirdparty libraries/executables may have other license (OpenVPN, lzo, OpenSSL, Google Breakpad)
+License for OpenVPN for Android. Please note that the thirdparty libraries/executables may have other license (OpenVPN, lzo, OpenSSL, Google Breakpad)
 
-The source code needed to control popcornVPN from another app (the remoteExample) is licensed under the Apache v2 license.
+The source code needed to control OpenVPN for Android from another app (the remoteExample) is licensed under the Apache v2 license.
 
-Copyright (c) 2019, Tejas Mehta, Frank Gomes, Connor McDermid
+Copyright (c) 2012-2014, Arne Schwabe
  All rights reserved.
 
 
-popcornVPN is derivative work of ics-openvpn, (c) 2012-2014, Arne Schwabe.
-To view ics-openvpn's license, please view doc/ics-openvpn-license.txt
-popcornVPN  is distributed under the GPL license version 2 (see Below)
-with the following clarification/additional terms of what constitutes "derivative work":
+The name ics-openvpn and OpenVPN for Android refer to the same program.
+OpenVPN for Android is distributed under the GPL license version 2 (see Below)
+with the following clarification/additional terms of what constitues "deriviate work":
 
-Using/including any part of popcornVPN, especially using/including any part of the
-org.hacksugar.hopper class hierarchy, creates derivative work of popcornVPN.
+Using/including any part of ics-openvpn, especially using/including any part of the
+de.blinkt.openvpn class hierarchy, creates derivative work of ics-openvpn.
 The normal definitions of derivative additionally apply.
 
-If you need a non GPLv2 license of the source please contact us at:
-    cam-o-man@live.com
-    tmthecoder@gmail.com
-    pwnsauz777@gmail.com
+If you need a non GPLv2 license of the source please contact me.
 
-Special exception for linking popcornVPN with OpenSSL:
+Special exception for linking ics-openvpn with OpenSSL:
 
-In addition, as a special exception, Tejas Mehta, Frank Gomes, and Connor McDermid gives
+In addition, as a special exception, Arne Schwabe gives
 permission to link the code of this program with the OpenSSL
 library (or with modified versions of OpenSSL that use the same
 license as OpenSSL), and distribute linked combinations including
@@ -48,7 +44,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-Alternatively, visit <https://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
 
 In addition, as a special exception, the copyright holders give
 permission to link the code of portions of this program with the
