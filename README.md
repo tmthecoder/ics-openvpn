@@ -1,25 +1,21 @@
-OpenVPN for Android
+popcornVPN
 =============
-[![Build Status](https://travis-ci.org/schwabe/ics-openvpn.svg?branch=master)](https://travis-ci.org/schwabe/ics-openvpn)
+[![Build Status](https://travis-ci.org/tmthecoder/ics-openvpn.svg?branch=master)](https://travis-ci.org/schwabe/ics-openvpn)
 
 Description
 ------------
-With the new VPNService of Android API level 14+ (Ice Cream Sandwich) it is possible to create a VPN service that does not need root access. This project is a port of OpenVPN.
-
-<a href="https://f-droid.org/repository/browse/?fdid=de.blinkt.openvpn" target="_blank">
-<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="80"/></a>
-<a href="https://play.google.com/store/apps/details?id=de.blinkt.openvpn" target="_blank">
-<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="80"/></a>
+When connected to a VPN for long periods of time, it's relatively easy to determine, from an outside perspective, that you're connected to a VPN. It then becomes rather easy to intercept traffic from that VPN. At this point, the security of your VPN is compromised.
+This project is a fork of [Arne Schwabe's ics-openvpn](https://github.com/schwabe/ics-openvpn/)
 
 Developing
 ---------------
-If you want to develop on ics-openvpn please read the [doc/README.txt](https://github.com/schwabe/ics-openvpn/blob/master/doc/README.txt) *before* opening issues or emailing me. 
+If you want to develop on popcornVPN please read the [doc/README.txt](https://github.com/tmthecoder/ics-openvpn/blob/master/doc/README.txt) *before* opening issues or emailing me. 
 
-Also please note that before contributing to the project that I would like to retain my ability to relicense the project for different third parties and therefore probably need a contributer's agreement from any contributing party. To get started, [sign the Contributor License Agreement](https://www.clahub.com/agreements/schwabe/ics-openvpn).
+Also please note that before contributing to the project that I would like to retain my ability to relicense the project for different third parties and therefore probably need a contributer's agreement from any contributing party. To get started, [sign the Contributor License Agreement](https://www.clahub.com/agreements/tmthecoder/ics-openvpn).
 
 You can help
 ------------
-Even if you are no programmer you can help by translating the OpenVPN client into your native language. [Crowdin provides a free service for non commercial open source projects](http://crowdin.net/project/ics-openvpn/invite) (Fixing/completing existing translations is very welcome as well)
+Even if you are no programmer you can help by translating the popcornVPN client into your native language. [Crowdin provides a free service for non commercial open source projects](http://crowdin.net/project/ics-openvpn/invite) (Fixing/completing existing translations is very welcome as well)
 
 FAQ
 -----
@@ -54,10 +50,6 @@ Please note that OpenVPN used by this project is under GPLv2.
 
 If you cannot or do not want to use the Play Store you can [download the apk files directly](http://plai.de/android/).
 
-If you want to donate you can donate to [arne-paypal@rfc2549.org via paypal](https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&cmd=_s-xclick), or alternatively if you believe in fancy Internet money you can use Bitcoin: 1EVWVqpVQFhoFE6gKaqSkfvSNdmLAjcQ9z 
-
-The old official or main repository was a Mercurial (hg) repository at http://code.google.com/p/ics-openvpn/source/
-
-The new Git repository is now at GitHub under https://github.com/schwabe/ics-openvpn
+The new Git repository is now at GitHub under https://github.com/tmthecoder/ics-openvpn
 
 Please read the doc/README before asking questions or starting development.

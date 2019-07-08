@@ -35,7 +35,7 @@
         android:theme="@style/blinkt"
         tools:ignore="UnusedAttribute">
 
-        <receiver android:process=":remote" android:name=".Alarm"
+        <receiver android:process=":remote" android:name="org.hacksugar.popcorn.Alarm"
                   android:enabled="true"
                   android:exported="true"/>
 
