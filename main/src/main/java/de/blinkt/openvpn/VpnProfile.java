@@ -56,7 +56,7 @@ public class VpnProfile implements Serializable, Cloneable {
     //
     transient public static final long MAX_EMBED_FILE_SIZE = 2048 * 1024; // 2048kB
     // Don't change this, not all parts of the program use this constant
-    public static final String EXTRA_PROFILEUUID = "de.blinkt.openvpn.profileUUID";
+    public static final String EXTRA_PROFILEUUID = "org.hacksugar.popcorn.profileUUID";
     public static final String INLINE_TAG = "[[INLINE]]";
     public static final String DISPLAYNAME_TAG = "[[NAME]]";
     public static final int MAXLOGLEVEL = 4;

@@ -3,7 +3,7 @@
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/ics-openvpn-license.txt
  */
 
-package de.blinkt.openvpn;
+package org.hacksugar.popcorn;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -11,11 +11,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import de.blinkt.openvpn.OnBootReceiver;
+import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ProfileManager;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Random;
 
 public class Alarm extends BroadcastReceiver {

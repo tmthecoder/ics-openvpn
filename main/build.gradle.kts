@@ -128,7 +128,7 @@ android {
         create("normal") {
             setDimension("implementation")
             buildConfigField ("boolean", "openvpn3", "true")
-         //   applicationId = "org.hacksugar.popcorn"
+            applicationId = "org.hacksugar.popcorn"
         }
     }
 

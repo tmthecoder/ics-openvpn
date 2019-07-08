@@ -8,7 +8,6 @@ package de.blinkt.openvpn.fragments;
 import android.annotation.TargetApi;
 import android.app.*;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ShortcutInfo;
@@ -19,7 +18,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
 import android.text.Html;
 import android.text.Html.ImageGetter;
@@ -39,7 +37,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
 
-import de.blinkt.openvpn.Alarm;
+import org.hacksugar.popcorn.Alarm;
 import de.blinkt.openvpn.LaunchVPN;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
@@ -592,6 +590,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
 
 
         if (requestCode == START_VPN_CONFIG) {
+            Log.i("PROFILE", VpnProfile.EXTRA_PROFILEUUID);
             String configuredVPN = data.getStringExtra(VpnProfile.EXTRA_PROFILEUUID);
 
             VpnProfile profile = ProfileManager.get(getActivity(), configuredVPN);
@@ -628,6 +627,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         mEditProfile = profile;
         Intent vprefintent = new Intent(getActivity(), VPNPreferences.class)
                 .putExtra(getActivity().getPackageName() + ".profileUUID", profile.getUUID().toString());
+        Log.i("PROFILE", getActivity().getPackageName() + ".profileUUID" +  profile.getUUID().toString());
 
         startActivityForResult(vprefintent, START_VPN_CONFIG);
     }
