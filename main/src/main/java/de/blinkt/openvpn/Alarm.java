@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2019 Tejas Mehta, Frank Gomes, Connor McDermid
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/ics-openvpn-license.txt
+ */
+
 package de.blinkt.openvpn;
 
 import android.app.AlarmManager;
