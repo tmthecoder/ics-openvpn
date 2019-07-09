@@ -510,7 +510,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         return true;
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private boolean startFilePicker() {
 
         Intent i = Utils.getFilePickerIntent(getActivity(), Utils.FileType.OVPN_CONFIG);
