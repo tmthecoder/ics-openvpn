@@ -326,15 +326,13 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
             TextView importvpntext = (TextView) v.findViewById(R.id.import_vpn_hint);
             // Switch that toggles whether or not hopping is enabled
         Switch hopper = v.findViewById(R.id.hopper);
-        // Puts hopper state in memory
-        edit.putBoolean("hopperStatus",hopperChecked).commit();
 
         hopper.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 hopperChecked = isChecked;
-                // TODO write switch change to memory
-                //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext().MODE_PRIVATE);
+                // Puts hopper state in memory
+                edit.putBoolean("hopperStatus",hopperChecked).commit();
             }
         });
         newvpntext.setText(Html.fromHtml(getString(R.string.add_new_vpn_hint), new MiniImageGetter(), null));
