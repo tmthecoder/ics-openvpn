@@ -18,14 +18,12 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
+import android.preference.*;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceCategory;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
 
+import android.util.Log;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import de.blinkt.openvpn.BuildConfig;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
@@ -38,6 +36,7 @@ public class GeneralSettings extends PreferenceFragment implements OnPreferenceC
 
 	private ExternalAppDatabase mExtapp;
 	private ListPreference mAlwaysOnVPN;
+	private boolean randOn;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +51,33 @@ public class GeneralSettings extends PreferenceFragment implements OnPreferenceC
 		mAlwaysOnVPN = (ListPreference) findPreference("alwaysOnVpn");
         mAlwaysOnVPN.setOnPreferenceChangeListener(this);
 
+      	//Pref for interval if needed
+		EditTextPreference nonRandInput = (EditTextPreference) findPreference("nonRandInterval");
+		checkInt(nonRandInput, nonRandInput.getText());
+		nonRandInput.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+			@Override
+			public boolean onPreferenceChange(Preference preference, Object newValue) {
+				EditTextPreference pref = (EditTextPreference) preference;
+				checkInt(pref, newValue.toString());
+				return true;
+			}
+		});
+		//Pref for rand Switch
+        SwitchPreference switchRand = (SwitchPreference) findPreference("randHopperPref");
+        switchRand.setSwitchTextOff(R.string.rand_off);
+        //Change text based on on or off
+        switchRand.setSwitchTextOn(R.string.rand_on);
+        randOn = switchRand.isChecked();
+        //Change listener to show or hide the editText above
+        switchRand.setOnPreferenceChangeListener((preference, newValue) -> {
+			 randOn = ((SwitchPreference) preference).isChecked();
+			 if (randOn) {
+				 nonRandInput.setEnabled(true);
+			 } else {
+				 nonRandInput.setEnabled(false);
+			 }
+			return true;
+		});
 
         Preference loadtun = findPreference("loadTunModule");
 		if(!isTunModuleAvailable()) {
@@ -88,6 +114,21 @@ public class GeneralSettings extends PreferenceFragment implements OnPreferenceC
 
 
 		setClearApiSummary();
+	}
+
+	//Method to check the
+	private void checkInt(EditTextPreference editText, String textVal) {
+		if (!textVal.matches("[0-9]+")) {
+			//If no entries, show according summary
+			editText.setSummary(R.string.summary_no_num_edit_text);
+		} else {
+			if (Integer.parseInt(textVal) < 5) {
+				editText.setSummary(R.string.summary_low_num_edit_text);
+			} else {
+				CharSequence summary = "Your set hopping interval is: " + textVal + " minutes";
+				editText.setSummary(summary);
+			}
+		}
 	}
 
 	@Override
@@ -179,7 +220,6 @@ public class GeneralSettings extends PreferenceFragment implements OnPreferenceC
 			setClearApiSummary();
 		}
 	}
-
 
 
 }

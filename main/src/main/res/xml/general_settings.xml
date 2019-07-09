@@ -6,6 +6,20 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <PreferenceCategory
+            android:title="VPN Hopping">
+
+        <SwitchPreference
+                android:defaultValue="false"
+                android:title="@string/rand_hopper" android:key="randHopperPref"
+                android:summary="@string/rand_summary"/>
+        <EditTextPreference
+                android:defaultValue="Default value"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:title="@string/hopper_edit_title" android:key="nonRandInterval"
+                android:inputType="number"/>
+    </PreferenceCategory>
     <PreferenceCategory android:title="@string/appbehaviour" android:key="app_behaviour">
         <CheckBoxPreference
                 android:defaultValue="true"

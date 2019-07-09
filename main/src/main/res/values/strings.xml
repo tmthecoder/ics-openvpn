@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?> <!--
   ~ Copyright (c) 2012-2016 Arne Schwabe
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/ics-openvpn-license.txt
+  ~ Modified to add hopping functionality by Tejas Mehta, Connor McDermid and Frank Gomes
   -->
 <resources>
     <string name="app">popcornVPN</string>
     <string name="address">Server Address:</string>
+    <string name="rand_hopper">Use Random Hopping</string>
+    <string name="hopper_edit_title">Hopping Interval (Minutes)</string>
     <string name="port">Server Port:</string>
     <string name="location">Location</string>
     <string name="cant_read_folder">Unable to read directory</string>
@@ -492,5 +495,9 @@
     <string name="summary_block_address_families">This option instructs Android to not allow protocols (IPv4/IPv6) if the VPN does not set any IPv4 or IPv6 addresses.</string>
     <string name="title_block_address_families">Block IPv6 (or IPv4) if not used by the VPN</string>
     <string name="random_hopping">Random Hopping</string>
-
+    <string name="rand_summary">This switch controls the preference for your hopping. Either random or hopping by a set interval. To use this feature, the switch must be on in the profiles tab. If the switch is on,m the value below will be ignored as you have set random hopping on</string>
+    <string name="rand_off">Random Hopping is: OFF</string>
+    <string name="rand_on">Random Hopping is: ON</string>
+    <string name="summary_no_num_edit_text">You have not yet set an interval for hopping. If you want to use non-random hopping, please set a time by clicking</string>
+    <string name="summary_low_num_edit_text">The interval is too low, and is not allowed to be set by the system. You must set an interval of 5 minutes or more. If not, the hopping functionality will not work</string>
 </resources>

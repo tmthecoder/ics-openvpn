@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/ics-openvpn-license.txt
+ * Edited by Tejas Mehta, Connor McDermid, Frank Gomes to add hopping functionality
  */
 
 package de.blinkt.openvpn.fragments;
@@ -18,6 +19,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.text.Html;
 import android.text.Html.ImageGetter;
@@ -320,6 +322,8 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 hopperChecked = isChecked;
+                // TODO write switch change to memory
+                //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext().MODE_PRIVATE);
             }
         });
         newvpntext.setText(Html.fromHtml(getString(R.string.add_new_vpn_hint), new MiniImageGetter(), null));
