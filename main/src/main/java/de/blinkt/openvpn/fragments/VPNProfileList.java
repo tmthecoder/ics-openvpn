@@ -52,9 +52,11 @@ import de.blinkt.openvpn.core.Preferences;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VpnStatus;
 
+import static android.content.Context.MODE_PRIVATE;
 import static de.blinkt.openvpn.core.OpenVPNService.DISCONNECT_VPN;
 
 
+@RequiresApi(Build.VERSION_CODES.M)
 public class VPNProfileList extends ListFragment implements OnClickListener, VpnStatus.StateListener {
 
     public final static int RESULT_VPN_DELETED = Activity.RESULT_FIRST_USER;
@@ -73,7 +75,10 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     private PendingIntent pendingIntent;
     private AlarmManager manager;
     private String mLastStatusMessage;
-    private boolean hopperChecked = false;
+    // SharedPreferences object for getting status of the hopper previously set
+    SharedPreferences sp = getContext().getSharedPreferences("hopping_preferences", MODE_PRIVATE);
+    // Sets hopper status to previous setting
+    private boolean hopperChecked = sp.getBoolean("hopperStatus", false);
 
     @Override
     public void updateState(String state, String logmessage, final int localizedResId, ConnectionStatus level) {
@@ -135,7 +140,6 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     private void startOrStopVPN(VpnProfile profile, boolean hopping) {
         if (VpnStatus.isVPNActive() && profile.getUUIDString().equals(VpnStatus.getLastConnectedVPNProfile())) {
             Intent disconnectVPN = new Intent(getActivity(), DisconnectVPN.class);
@@ -309,14 +313,21 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         VpnStatus.removeStateListener(this);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.vpn_profile_list, container, false);
+        Bundle savedInstanceState) {
+            // Editor for committing setting changes
+            SharedPreferences.Editor edit = sp.edit();
 
-        TextView newvpntext = (TextView) v.findViewById(R.id.add_new_vpn_hint);
-        TextView importvpntext = (TextView) v.findViewById(R.id.import_vpn_hint);
+            View v = inflater.inflate(R.layout.vpn_profile_list, container, false);
+
+            TextView newvpntext = (TextView) v.findViewById(R.id.add_new_vpn_hint);
+            TextView importvpntext = (TextView) v.findViewById(R.id.import_vpn_hint);
+            // Switch that toggles whether or not hopping is enabled
         Switch hopper = v.findViewById(R.id.hopper);
+        // Puts hopper state in memory
+        edit.putBoolean("hopperStatus",hopperChecked).commit();
 
         hopper.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
