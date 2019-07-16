@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2019 Tejas Mehta, Frank Gomes, Connor McDermid
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/ics-openvpn-license.txt
+ * Distributed under the GNU GPL v3 with additional terms. For full terms see the file doc/ics-openvpn-license.txt
  */
 
 package org.hacksugar.popcorn;
@@ -24,12 +24,7 @@ public class Alarm extends BroadcastReceiver {
         //Receive method for alarm, main VPN switching happens here when called by startAlarm
         ArrayList<VpnProfile> allvpn = new ArrayList<>(getPM(context).getProfiles());
         //Make an ArrayList of all profiles and delete the one in current use
-        for (VpnProfile vpn: allvpn) {
-            if (vpn == ProfileManager.getConnectedProfile()) {
-                allvpn.remove(vpn);
-                break;
-            }
-        }
+        allvpn.remove(ProfileManager.getConnectedProfile());
         Random rand = new Random();
         //Make a random and get a random profile from remaining profiles in ArrayList
         OnBootReceiver.startVPN(allvpn.get(rand.nextInt(allvpn.size())), context);
@@ -42,6 +37,7 @@ public class Alarm extends BroadcastReceiver {
     public void setAlarm(Context context) {
         Random rand = new Random();
         int interval = rand.nextInt(90) + 30;
+        Log.i("RANDOM", String.valueOf(interval));
         startAlarm(context, interval);
     }
     //Method to set alarm from a given interval

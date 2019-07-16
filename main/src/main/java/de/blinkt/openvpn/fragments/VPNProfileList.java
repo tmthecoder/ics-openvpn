@@ -75,10 +75,12 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     private PendingIntent pendingIntent;
     private AlarmManager manager;
     private String mLastStatusMessage;
+    private boolean random;
+    private int interval;
     // SharedPreferences object for getting status of the hopper previously set
-    SharedPreferences sp = getContext().getSharedPreferences("hopping_preferences", MODE_PRIVATE);
+    SharedPreferences sp;
     // Sets hopper status to previous setting
-    private boolean hopperChecked = sp.getBoolean("hopperStatus", false);
+    private boolean hopperChecked;
 
     @Override
     public void updateState(String state, String logmessage, final int localizedResId, ConnectionStatus level) {
@@ -144,8 +146,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         if (VpnStatus.isVPNActive() && profile.getUUIDString().equals(VpnStatus.getLastConnectedVPNProfile())) {
             Intent disconnectVPN = new Intent(getActivity(), DisconnectVPN.class);
             startActivity(disconnectVPN);
-        } else {
-            startVPN(profile, hopping);
+        } else { startVPN(profile, hopping);
         }
     }
 
@@ -158,6 +159,32 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sp = getContext().getSharedPreferences("hopping_preferences", MODE_PRIVATE);
+        hopperChecked = sp.getBoolean("hopperStatus", false);
+        if (hopperChecked) {
+            //Initial Startup check only if its already set true
+            if (Utils.checkRandom(getActivity())) {
+                random = true;
+            } else {
+                random = false;
+                //Check for interval setting
+                if (Utils.getInterval(getActivity()).matches("[0-9]+")) {
+                    //Check if above 5
+                    if (Integer.parseInt(Utils.getInterval(getActivity())) >= 5) {
+                        //Set var if all conditions met
+                        interval = Integer.parseInt(Utils.getInterval(getActivity()));
+                    } else {
+                        //Handle under 5
+                        Toast.makeText(getActivity(), "Please enter a number in settings above 5 for interval", Toast.LENGTH_SHORT).show();
+                        hopperChecked = false;
+                    }
+                } else {
+                    //Hande none entered
+                    Toast.makeText(getActivity(), "Please enter a number in settings for interval", Toast.LENGTH_SHORT).show();
+                    hopperChecked = false;
+                }
+            }
+        }
         setHasOptionsMenu(true);
     }
 
@@ -326,11 +353,38 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
             TextView importvpntext = (TextView) v.findViewById(R.id.import_vpn_hint);
             // Switch that toggles whether or not hopping is enabled
         Switch hopper = v.findViewById(R.id.hopper);
-
+        hopper.setChecked(hopperChecked);
         hopper.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 hopperChecked = isChecked;
+                //Check if checked
+                if (isChecked) {
+                    //Check preferences for random setting
+                    if (Utils.checkRandom(getActivity())) {
+                        random = true;
+                    } else {
+                        random = false;
+                        //Check for interval setting
+                        if (Utils.getInterval(getActivity()).matches("[0-9]+")) {
+                            //Check if above 5
+                            if (Integer.parseInt(Utils.getInterval(getActivity())) >= 5) {
+                                //Set var if all conditions met
+                                interval = Integer.parseInt(Utils.getInterval(getActivity()));
+                            } else {
+                                //Handle under 5
+                                Toast.makeText(getActivity(), "Please enter a number in settings above 5 for interval", Toast.LENGTH_SHORT).show();
+                                hopper.setChecked(false);
+                            }
+                        } else {
+                            //Hande none entered
+                            Toast.makeText(getActivity(), "Please enter a number in settings for interval", Toast.LENGTH_SHORT).show();
+                            hopper.setChecked(false);
+                        }
+                    }
+                } else {
+                    random = false;
+                }
                 // Puts hopper state in memory
                 edit.putBoolean("hopperStatus",hopperChecked).commit();
             }
@@ -603,7 +657,6 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
 
 
         if (requestCode == START_VPN_CONFIG) {
-            Log.i("PROFILE", VpnProfile.EXTRA_PROFILEUUID);
             String configuredVPN = data.getStringExtra(VpnProfile.EXTRA_PROFILEUUID);
 
             VpnProfile profile = ProfileManager.get(getActivity(), configuredVPN);
@@ -640,19 +693,19 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         mEditProfile = profile;
         Intent vprefintent = new Intent(getActivity(), VPNPreferences.class)
                 .putExtra(getActivity().getPackageName() + ".profileUUID", profile.getUUID().toString());
-        Log.i("PROFILE", getActivity().getPackageName() + ".profileUUID" +  profile.getUUID().toString());
-
         startActivityForResult(vprefintent, START_VPN_CONFIG);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void startVPN(VpnProfile profile, boolean hopping) {
         if (hopping) {
-            Log.i("HOPPER", "Started");
-            manager = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
-            Intent intent = new Intent(getActivity(), Alarm.class);
-            pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
-            manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 60 * 5, pendingIntent); // Millisec * Second * Minute
+            Alarm alarm = new Alarm();
+            //Get alarm and check random(call method accordingly)
+            if (random) {
+                alarm.setAlarm(getActivity());
+            } else {
+                alarm.setAlarm(getActivity(), interval);
+            }
         }
         getPM().saveProfile(getActivity(), profile);
         Intent intent = new Intent(getActivity(), LaunchVPN.class);

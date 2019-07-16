@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/ics-openvpn-license.txt
+ * Edited by Tejas Mehta, Connor McDermid, Frank Gomes to add hopping functionality
  */
 
 package de.blinkt.openvpn.activities;
@@ -84,13 +85,9 @@ public class DisconnectVPN extends Activity implements DialogInterface.OnClickLi
             ProfileManager.setConntectedVpnProfileDisconnected(this);
             if (mService != null) {
                 try {
-                    Intent alarmIntent = new Intent(this, Alarm.class);
-                    pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
-                    manager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-                    if (manager != null) {
-                        manager.cancel(pendingIntent);
-                    }
-                    Log.i("HOPPER", "Stopped");
+                    //Cancel alarm to stop hopping on disconnect
+                    Alarm alarm = new Alarm();
+                    alarm.cancelAlarm(this);
                     mService.stopVPN(false);
                 } catch (RemoteException e) {
                     VpnStatus.logException(e);

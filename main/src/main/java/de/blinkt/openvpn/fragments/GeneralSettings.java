@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/ics-openvpn-license.txt
+ * Edited by Tejas Mehta, Connor McDermid, Frank Gomes to add hopping functionality
  */
 
 package de.blinkt.openvpn.fragments;
@@ -54,20 +55,20 @@ public class GeneralSettings extends PreferenceFragment implements OnPreferenceC
       	//Pref for interval if needed
 		EditTextPreference nonRandInput = (EditTextPreference) findPreference("nonRandInterval");
 		checkInt(nonRandInput, nonRandInput.getText());
-		nonRandInput.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-			@Override
-			public boolean onPreferenceChange(Preference preference, Object newValue) {
-				EditTextPreference pref = (EditTextPreference) preference;
-				checkInt(pref, newValue.toString());
-				return true;
-			}
-		});
+		nonRandInput.setOnPreferenceChangeListener((preference, newValue) -> {
+            EditTextPreference pref = (EditTextPreference) preference;
+            checkInt(pref, newValue.toString());
+            return true;
+        });
 		//Pref for rand Switch
         SwitchPreference switchRand = (SwitchPreference) findPreference("randHopperPref");
         switchRand.setSwitchTextOff(R.string.rand_off);
         //Change text based on on or off
         switchRand.setSwitchTextOn(R.string.rand_on);
         randOn = switchRand.isChecked();
+        if (randOn) {
+        	nonRandInput.setEnabled(false);
+		}
         //Change listener to show or hide the editText above
         switchRand.setOnPreferenceChangeListener((preference, newValue) -> {
 			 randOn = ((SwitchPreference) preference).isChecked();

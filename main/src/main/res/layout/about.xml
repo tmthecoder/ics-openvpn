@@ -111,6 +111,21 @@
             android:layout_height="12sp" />
 
         <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/hopper"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/hopper_copyright" />
+
+        <Space
+                android:layout_width="match_parent"
+                android:layout_height="12sp" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/openvpn"

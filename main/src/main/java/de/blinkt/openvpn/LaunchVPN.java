@@ -71,9 +71,9 @@ import de.blinkt.openvpn.core.VpnStatus;
  */
 public class LaunchVPN extends Activity {
 
-    public static final String EXTRA_KEY = "de.blinkt.openvpn.shortcutProfileUUID";
-    public static final String EXTRA_NAME = "de.blinkt.openvpn.shortcutProfileName";
-    public static final String EXTRA_HIDELOG = "de.blinkt.openvpn.showNoLogWindow";
+    public static final String EXTRA_KEY = "org.hacksugar.popcorn.shortcutProfileUUID";
+    public static final String EXTRA_NAME = "org.hacksugar.popcorn.shortcutProfileName";
+    public static final String EXTRA_HIDELOG = "org.hacksugar.popcorn.showNoLogWindow";
     public static final String CLEARLOG = "clearlogconnect";
 
 

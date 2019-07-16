@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/ics-openvpn-license.txt
+ * Edited by Tejas Mehta, Connor McDermid, Frank Gomes to add hopping functionality
  */
 
 package de.blinkt.openvpn.fragments;
@@ -151,11 +152,22 @@ public class Utils {
         return i;
     }
 
-    public static boolean alwaysUseOldFileChooser(Context c)
-    {
+    public static boolean alwaysUseOldFileChooser(Context c) {
         SharedPreferences prefs = Preferences.getDefaultSharedPreferences(c);
 
         return prefs.getBoolean("useInternalFileSelector", false);
+    }
+
+    //Add a method to check the random pref
+    public static boolean checkRandom(Context c) {
+        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(c);
+        return prefs.getBoolean("randHopperPref", false);
+    }
+
+    //Add a method to check the interval
+    public static String getInterval(Context c) {
+        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(c);
+        return prefs.getString("nonRandInterval", "0");
     }
 
     public static boolean isIntentAvailable(Context context, Intent i) {

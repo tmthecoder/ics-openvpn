@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ * Edited by Tejas Mehta, Connor McDermid, Frank Gomes to add hopping functionality
  */
 
 plugins {
@@ -65,8 +66,8 @@ android {
     defaultConfig {
         minSdkVersion(14)
         targetSdkVersion(28)
-        versionCode = 161
-        versionName = "0.7.8"
+        versionCode = 2
+        versionName = "1.0.0"
 
         externalNativeBuild {
             cmake {

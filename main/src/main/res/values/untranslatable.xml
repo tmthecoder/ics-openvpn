@@ -5,16 +5,16 @@
 
 <resources>
 
-    <string name="copyright_blinktgui" translatable="false">Copyright 2012–2018 Arne Schwabe &lt;arne@rfc2549.org>
+    <string name="copyright_blinktgui" translatable="false">Copyright 2012–2018 Arne Schwabe(ics-openvpn) &lt;arne@rfc2549.org>
     </string>
-    <string name="copyright_logo" translatable="false">App Logo design by Helen Beierling
-        &lt;helbeierling@t-online.de>
+    <string name="copyright_logo" translatable="false">App Logo design by Frank Gomes
     </string>
 
     <string name="opevpn_copyright" translatable="false">Copyright © 2002–2010 OpenVPN Technologies, Inc. &lt;sales@openvpn.net>\n
 
         "OpenVPN" is a trademark of OpenVPN Technologies, Inc.\n
     </string>
+    <string name="hopper_copyright" translatable="false">Copyright © 2019 Tejas Mehta, Frank Gomes, Connor McDermid</string>
     <string name="defaultserver" translatable="false">openvpn.uni-paderborn.de</string>
     <string name="defaultport" translatable="false">1194</string>
     <string name="copyright_file_dialog" translatable="false">File Dialog based on work by Alexander Ponomarev</string>
@@ -27,6 +27,7 @@
         Copyright © 1995-1998 Eric Young (eay@cryptsoft.com) All rights reserved.
     </string>
     <string name="openvpn" translatable="false">OpenVPN</string>
+    <string name="hopper" translatable="false">VPN Hopping</string>
     <string name="file_dialog" translatable="false">File Dialog</string>
     <string name="lzo" translatable="false">LZO</string>
     <string name="openssl" translatable="false">OpenSSL</string>

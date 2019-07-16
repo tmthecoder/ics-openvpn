@@ -21,7 +21,7 @@
     <string name="client_pkcs12_title">PKCS12 File</string>
     <string name="ca_title">CA Certificate</string>
     <string name="no_certificate">You must select a certificate</string>
-    <string name="copyright_guicode">Source code and issue tracker available at https://github.com/schwabe/ics-openvpn/</string>
+    <string name="copyright_guicode">Source code and issue tracker available at https://github.com/tmthecoder/ics-openvpn/</string>
     <string name="copyright_others">This program uses the following components; see the source code for full details on the licenses</string>
     <string name="about">About</string>
     <string name="vpn_list_title">Profiles</string>
@@ -495,6 +495,7 @@
     <string name="summary_block_address_families">This option instructs Android to not allow protocols (IPv4/IPv6) if the VPN does not set any IPv4 or IPv6 addresses.</string>
     <string name="title_block_address_families">Block IPv6 (or IPv4) if not used by the VPN</string>
     <string name="random_hopping">Random Hopping</string>
+    <string name="vpn_hopping">VPN Hopping</string>
     <string name="rand_summary">This switch controls the preference for your hopping. Either random or hopping by a set interval. To use this feature, the switch must be on in the profiles tab. If the switch is on,m the value below will be ignored as you have set random hopping on</string>
     <string name="rand_off">Random Hopping is: OFF</string>
     <string name="rand_on">Random Hopping is: ON</string>

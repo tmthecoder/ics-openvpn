@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.support.annotation.RequiresApi;
 import android.support.v4n.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -74,7 +75,8 @@ public class VPNPreferences extends BaseActivity {
 		super.onSaveInstanceState(outState);
 	}
 
-	@Override
+	@RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
 	protected void onResume() {
 		super.onResume();
         getProfile();
@@ -188,7 +190,8 @@ public class VPNPreferences extends BaseActivity {
 		super.onBackPressed();
 	}
 
-	@Override
+	@RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.remove_vpn)
 			askProfileRemoval();
@@ -211,24 +214,20 @@ public class VPNPreferences extends BaseActivity {
 		return super.onCreateOptionsMenu(menu);
 	}
 
-	private void askProfileRemoval() {
+	@RequiresApi(api = Build.VERSION_CODES.M)
+    private void askProfileRemoval() {
 		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 		dialog.setTitle("Confirm deletion");
 		dialog.setMessage(getString(R.string.remove_vpn_query, mProfile.mName));
 
 		dialog.setPositiveButton(android.R.string.yes,
-				new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				removeProfile(mProfile);
-			}
-
-		});
+                (dialog1, which) -> removeProfile(mProfile));
 		dialog.setNegativeButton(android.R.string.no,null);
 		dialog.create().show();
 	}
 	
-	protected void removeProfile(VpnProfile profile) {
+	@RequiresApi(api = Build.VERSION_CODES.M)
+    protected void removeProfile(VpnProfile profile) {
 		ProfileManager.getInstance(this).removeProfile(this,profile);
 		setResult(VPNProfileList.RESULT_VPN_DELETED);
 		finish();
